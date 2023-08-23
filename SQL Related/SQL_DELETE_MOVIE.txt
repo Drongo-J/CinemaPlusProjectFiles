@@ -1,0 +1,26 @@
+DECLARE @movieId VARCHAR(255);
+SET @movieId = '29360e98-02eb-4582-9c0f-a4abadaa78c7';
+
+-- Delete related seats
+DELETE FROM Seats
+WHERE SessionId IN (SELECT Id FROM Sessions WHERE MovieId = @movieId);
+
+-- Delete related subtitles
+DELETE FROM Subtitles
+WHERE MovieId = @movieId;
+
+-- Delete related languages
+DELETE FROM Languages
+WHERE MovieId = @movieId;
+
+-- Delete related tickets
+DELETE FROM Tickets
+WHERE SessionId IN (SELECT Id FROM Sessions WHERE MovieId = @movieId);
+
+-- Delete related sessions
+DELETE FROM Sessions
+WHERE MovieId = @movieId;
+
+-- Delete the movie
+DELETE FROM Movies
+WHERE Id = @movieId;
